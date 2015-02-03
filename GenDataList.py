@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 import fnmatch
 import os, sys
 import os.path
@@ -14,9 +15,13 @@ errfile = 'center-error'
 includes = r'|'.join([fnmatch.translate(x) for x in includes])
 excludes = r'|'.join([fnmatch.translate(x) for x in excludes]) or r'$.'
 
-data_source_root = '/home/kv/workspace/Trackers/ALOV'
+# path of 'clean' dataset
+data_source_root = '/home/kv/workspace/Trackers/ALOV/alov300++_frames/imagedata/'
 
-for root, dirs, files in os.walk('/home/kv/workspace/Trackers'):
+#data_list = 'data_list.txt'
+#fd = open(data_list, 'w')
+
+for root, dirs, files in os.walk('/home/kv/workspace/Trackers/Results'):
     # exclude dirs
     dirs[:] = [os.path.join(root, d) for d in dirs]
     dirs[:] = [d for d in dirs if not re.match(excludes, d)]
@@ -30,12 +35,16 @@ for root, dirs, files in os.walk('/home/kv/workspace/Trackers'):
     # start parsing the file
 
     for idx, fname in enumerate(files):
-        print idx
         images = fname.split('/')
+        tracker_type = fname.split('/')[6]
+        fd = open('data_list_' + tracker_type + '.txt', 'a+')
         if errfile + '.mat' in images or errfile + '.jpg' in images:
             continue
         mat = sio.loadmat('/'.join(images[:-1]) + '/center-error.mat')
         score = np.array(mat['error'][0,1:])
-        print data_source_root + '/'.join(images[7:])
-        # is this right?
-        print score[idx]
+        image_path = data_source_root + '/'.join(images[8:])
+        # for debug 
+        # print 'index', idx, ' in ', fname, str(score[idx])
+
+        #fd.write(image_path + ' ' + str(score[idx]) + ' ' + tracker_type + '\n')
+        fd.write(image_path + ' ' + str(score[idx]) + '\n')
