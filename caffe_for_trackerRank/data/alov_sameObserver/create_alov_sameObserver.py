@@ -16,8 +16,8 @@ db_name_prefix = 'alov_dataset_observer_'
 # commandline options
 backend_flag = '-backend lmdb'
 shuffle_flag = '-shuffle=true'
-width_flag  = '-resize_height=256'
-height_flag = '-resize_width=256'
+width_flag  = '-resize_height=225'
+height_flag = '-resize_width=225'
 
 # program
 image_converter = root_path + 'build/tools/convert_imageset.bin'
