@@ -16,11 +16,13 @@ includes = r'|'.join([fnmatch.translate(x) for x in includes])
 excludes = r'|'.join([fnmatch.translate(x) for x in excludes]) or r'$.'
 
 # path of 'clean' dataset
-data_source_root = '/home/kv/workspace/Trackers/ALOV/alov300++_frames/imagedata/'
+data_source_root = 'ALOV/alov300++_frames/imagedata/'
 
 #data_list = 'data_list.txt'
 #fd = open(data_list, 'w')
+os.system("rm alov_lists/*")
 
+print 'Starting generate the dataset list'
 for root, dirs, files in os.walk('/home/kv/workspace/Trackers/Results'):
     # exclude dirs
     dirs[:] = [os.path.join(root, d) for d in dirs]
@@ -37,7 +39,7 @@ for root, dirs, files in os.walk('/home/kv/workspace/Trackers/Results'):
     for idx, fname in enumerate(files):
         images = fname.split('/')
         tracker_type = fname.split('/')[6]
-        fd = open('data_list_' + tracker_type + '.txt', 'a+')
+        fd = open('alov_lists/data_list_' + tracker_type + '.txt', 'a+')
         if errfile + '.mat' in images or errfile + '.jpg' in images:
             continue
         mat = sio.loadmat('/'.join(images[:-1]) + '/center-error.mat')
