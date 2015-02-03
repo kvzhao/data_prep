@@ -44,9 +44,11 @@ for root, dirs, files in os.walk('/home/kv/workspace/Trackers/Results'):
             continue
         mat = sio.loadmat('/'.join(images[:-1]) + '/center-error.mat')
         score = np.array(mat['error'][0,1:])
+        label = np.rint(1000 * score[idx])
+        label = np.uint32(label)
         image_path = data_source_root + '/'.join(images[8:])
         # for debug 
         # print 'index', idx, ' in ', fname, str(score[idx])
 
         #fd.write(image_path + ' ' + str(score[idx]) + ' ' + tracker_type + '\n')
-        fd.write(image_path + ' ' + str(score[idx]) + '\n')
+        fd.write(image_path + ' ' + str(label) + '\n')
