@@ -23,7 +23,7 @@ data_source_root = 'ALOV/alov300++_frames/imagedata/'
 os.system("rm alov_lists/*")
 
 print 'Starting generate the dataset list'
-for root, dirs, files in os.walk('/home/kv/workspace/Trackers/Results'):
+for root, dirs, files in os.walk('/home/kv/workspace/trackers_ranking/Results'):
     # exclude dirs
     dirs[:] = [os.path.join(root, d) for d in dirs]
     dirs[:] = [d for d in dirs if not re.match(excludes, d)]
