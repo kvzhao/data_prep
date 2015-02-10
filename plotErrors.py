@@ -7,7 +7,7 @@ from pylab import *
 
 data_path = 'error-data/'
 fig_path = 'error-figs/'
-os.system("rm error-figs/*")
+os.system("rm -rf error-figs/*")
 
 # global list in order, Trackers/Attributes/Videos
 T, A, V = [], [], []
@@ -37,6 +37,10 @@ for fname in files:
 trackers = set(T)
 attributes = set(A)
 
+# more like cpp style generating folders
+for a in attributes:
+    os.mkdir(fig_path + a)
+
 # general purposes data parsing done
 # --------------------------------------------------------
 
@@ -58,4 +62,6 @@ for attr in attributes:
                     columnspacing=1.0, labelspacing=0.0,
                     handletextpad=0.0, handlelength=1.5,
                     fancybox=True, shadow=True)
-                plt.savefig(fig_path + '_'.join([attr,v])+'.jpg')
+                #plt.savefig(fig_path + '_'.join([attr,v])+'.jpg')
+                # save diff dirs
+                plt.savefig(fig_path+attr+'/'+v+'.jpg')
