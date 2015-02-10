@@ -45,12 +45,15 @@ for root, dirs, files in os.walk('/home/kv/workspace/trackers_ranking/Results'):
             #fd = open(save_path + tracker_type + '_' + attribute + '_' + video_name + '.txt', 'a+')
             mat = sio.loadmat(dir_path+ '/center-error.mat')
             # datum extraction
-            center_error = np.array(mat['error'][0,1:])
+            center_error = np.array(mat['error'][0,0:])
             fn = np.array(mat['f_no'][0,0:])
+            if len(center_error) != len(fn):
+                center_error = np.array(mat['error'][0,1:])
             #plt.plot(fn, center_error)
             mean = np.mean(center_error)
             std = np.std(center_error)
             print tracker_type, attribute, video_name, str(mean), str(std)
             #fd.write(center_error)
             np.savetxt(save_path + tracker_type + '_' + attribute + '_' + video_name + '.out', center_error, delimiter=',')
+            np.savetxt(save_path + tracker_type + '_' + attribute + '_' + video_name.replace('video', 'fn') + '.out', fn, delimiter=',')
     #plt.show()
