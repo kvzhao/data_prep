@@ -62,6 +62,8 @@ for attr in attributes:
                     columnspacing=1.0, labelspacing=0.0,
                     handletextpad=0.0, handlelength=1.5,
                     fancybox=True, shadow=True)
+                plt.xlabel('number of frame')
+                plt.ylabel('center distance error')
                 #plt.savefig(fig_path + '_'.join([attr,v])+'.jpg')
                 # save diff dirs
                 plt.savefig(fig_path+attr+'/'+v+'.jpg')
