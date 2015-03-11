@@ -5,10 +5,10 @@ import re
 import os, sys
 
 # dir_paths
-project_path = '/home/kv/workspace/Trackers/'
+project_path = '/home/kv/research/trackers_ranking/'
 root_path = project_path + '/caffe_for_trackerRank/'
 db_save_path = root_path + 'data/alov_sameObserver/'
-lists_path = project_path + 'alov_lists/'
+lists_path = project_path + 'dataset/data_prep/alov_lists/'
 
 # file_names
 db_name_prefix = 'alov_dataset_observer_'

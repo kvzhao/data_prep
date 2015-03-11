@@ -16,14 +16,16 @@ includes = r'|'.join([fnmatch.translate(x) for x in includes])
 excludes = r'|'.join([fnmatch.translate(x) for x in excludes]) or r'$.'
 
 # path of 'clean' dataset
-data_source_root = 'ALOV/alov300++_frames/imagedata/'
+project_root = '/home/kv/research/trackers_ranking/'
+data_source_root = 'dataset/ALOV/alov300++_frames/imagedata/'
+results_path = project_root + 'dataset/ALOV_Results'
 errfile = 'center-error'
 save_path = 'error-data/'
 
 os.system("rm error-data/*")
 
 #print 'Trackers\tAttribute\tVideo\tMeanError\tSTD'
-for root, dirs, files in os.walk('/home/kv/workspace/trackers_ranking/Results'):
+for root, dirs, files in os.walk(results_path):
     # exclude dirs
     dirs[:] = [os.path.join(root, d) for d in dirs]
     dirs[:] = [d for d in dirs if not re.match(excludes, d)]
@@ -37,11 +39,11 @@ for root, dirs, files in os.walk('/home/kv/workspace/trackers_ranking/Results'):
     
     for idx, dir_path in enumerate(dirs):
         dir_list = dir_path.split('/')
-        if len(dir_list) == 10:
+        if len(dir_list) == 11:
             # name extraction
-            tracker_type = dir_list[6]
-            attribute      = dir_list[8].split('-')[1]
-            video_name   = dir_list[9].split('_')[1]
+            tracker_type = dir_list[7]
+            attribute      = dir_list[9].split('-')[1]
+            video_name   = dir_list[10].split('_')[1]
             #fd = open(save_path + tracker_type + '_' + attribute + '_' + video_name + '.txt', 'a+')
             mat = sio.loadmat(dir_path+ '/center-error.mat')
             # datum extraction

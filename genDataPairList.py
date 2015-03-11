@@ -8,22 +8,19 @@ import scipy.io as sio
 
 includes = ['*.mat', '*.jpg'] # for files only
 excludes = ['center-error.mat', 'center-error.jpg'] # for dirs and files
-
 errfile = 'center-error'
-
 # transform glob patterns to regular expressions
 includes = r'|'.join([fnmatch.translate(x) for x in includes])
 excludes = r'|'.join([fnmatch.translate(x) for x in excludes]) or r'$.'
-
 # path of 'clean' dataset
+project_root = '/home/kv/research/trackers_ranking/'
 data_source_root = 'ALOV/alov300++_frames/imagedata/'
-
-#data_list = 'data_list.txt'
+results_path = project_root + 'dataset/ALOV_Results/'
 #fd = open(data_list, 'w')
 os.system("rm alov_lists/*")
 
 print 'Starting generate the dataset list'
-for root, dirs, files in os.walk('/home/kv/workspace/trackers_ranking/Results'):
+for root, dirs, files in os.walk(results_path):
     # exclude dirs
     dirs[:] = [os.path.join(root, d) for d in dirs]
     dirs[:] = [d for d in dirs if not re.match(excludes, d)]
@@ -38,7 +35,7 @@ for root, dirs, files in os.walk('/home/kv/workspace/trackers_ranking/Results'):
 
     for idx, fname in enumerate(files):
         images = fname.split('/')
-        tracker_type = fname.split('/')[6]
+        tracker_type = fname.split('/')[7]
         fd = open('alov_lists/data_list_' + tracker_type + '.txt', 'a+')
         if errfile + '.mat' in images or errfile + '.jpg' in images:
             continue
@@ -47,7 +44,7 @@ for root, dirs, files in os.walk('/home/kv/workspace/trackers_ranking/Results'):
         label = score[idx]
         #label = np.rint(1000 * score[idx])
         #label = np.uint32(label)
-        image_path = data_source_root + '/'.join(images[8:])
+        image_path = data_source_root + '/'.join(images[9:])
         # for debug 
         # print 'index', idx, ' in ', fname, str(score[idx])
 
