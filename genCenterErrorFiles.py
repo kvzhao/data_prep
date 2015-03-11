@@ -22,7 +22,8 @@ results_path = project_root + 'dataset/ALOV_Results'
 errfile = 'center-error'
 save_path = 'error-data/'
 
-os.system("rm error-data/*")
+os.system("rm error-data/error/*")
+os.system("rm error-data/fn/*")
 
 #print 'Trackers\tAttribute\tVideo\tMeanError\tSTD'
 for root, dirs, files in os.walk(results_path):
@@ -56,6 +57,7 @@ for root, dirs, files in os.walk(results_path):
             std = np.std(center_error)
             print tracker_type, attribute, video_name, str(mean), str(std)
             #fd.write(center_error)
-            np.savetxt(save_path + tracker_type + '_' + attribute + '_' + video_name + '.out', center_error, delimiter=',')
-            np.savetxt(save_path + tracker_type + '_' + attribute + '_' + video_name.replace('video', 'fn') + '.out', fn, delimiter=',')
+            np.savetxt(save_path +'error/'+ tracker_type + '_' + attribute + '_' + video_name + '.out', center_error, delimiter=',')
+            np.savetxt(save_path +'fn/'+ tracker_type + '_' + attribute + '_' + video_name + '.out', fn, delimiter=',')
+            #np.savetxt(save_path + tracker_type + '_' + attribute + '_' + video_name.replace('video', 'fn') + '.out', fn, delimiter=',')
     #plt.show()
