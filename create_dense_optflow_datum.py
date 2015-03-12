@@ -43,6 +43,10 @@ for root, dirs, files in os.walk(tracked_result_path):
         #print image_path_list, 'len = ', len(image_path_list)
         tracker_type = img_path_list[7]
         saving_dir = optflow_result_path + tracker_type
+        try:
+            os.stat(saving_dir)
+        except:
+            os.mkdir(saving_dir)
         fd = open(saving_dir + '/data_list_all_attr.txt', 'a+')
         if len(img_path_list) == 12:
             if img_path_list[-1].split('.')[0] == 'center-error':
@@ -71,7 +75,8 @@ for root, dirs, files in os.walk(tracked_result_path):
             hsv[...,2] = cv2.normalize(mag, None, 0, 255, cv2.NORM_MINMAX)
 
             rgb = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR)
-            new_name = 'optflow_' + img_path_list[-1].split('.')[0]
+            new_name = 'optflow_' + img_path_list[-3].split('-')[1] + '_'+ img_path_list[-1].split('.')[0]
+            print 'create the optical flow image', new_name
             try:
                 os.stat(saving_dir)
             except:
